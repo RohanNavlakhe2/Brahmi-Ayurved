@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.googleGmsGoogleServices)
 }
 
 kotlin {
@@ -30,6 +31,12 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            // Import the BoM for the Firebase platform
+            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:34.4.0"))
+
+            // Declare the dependency for the Cloud Firestore library
+            // When using the BoM, you don't specify versions in Firebase library dependencies
+            implementation(libs.google.firebase.firestore)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -40,6 +47,9 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -77,4 +87,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
